@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Solver - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <div class="container">
+        <header class="game-header">
+            <div class="logo-container">
+                <div class="maze-icon">🧩</div>
+                <h1 class="animate__animated animate__fadeInDown">Maze Solver</h1>
+            </div>
+            <p class="subtitle animate__animated animate__fadeIn animate__delay-1s">Navigate the labyrinth, conquer the challenge!</p>
+        </header>
+        
+        <div class="game-modes animate__animated animate__fadeIn animate__delay-1s">
+            <div class="mode-card story-card" onclick="location.href='story-mode.html'">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <h2>Story Mode</h2>
+                    <div class="card-icon">📖</div>
+                    <p>Embark on an epic journey through 25 hand-crafted mazes with increasing complexity.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="story-progress"></div>
+                        <span class="progress-text">0% Complete</span>
+                    </div>
+                    <button class="play-button pulse">Begin Adventure</button>
+                </div>
+            </div>
+            
+            <div class="mode-card mastery-card" onclick="location.href='mastery-mode.html'">
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <h2>Mastery Mode</h2>
+                    <div class="card-icon">🎯</div>
+                    <p>Test your skills with infinite randomly generated mazes at your chosen difficulty.</p>
+                    <div class="difficulty-preview">
+                        <span class="difficulty-pill easy">Easy</span>
+                        <span class="difficulty-pill medium">Medium</span>
+                        <span class="difficulty-pill hard">Hard</span>
+                    </div>
+                    <button class="play-button pulse">Prove Your Skill</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="game-footer">
+            <div class="social-links">
+                <a href="#" class="social-icon">📢</a>
+                <a href="#" class="social-icon">🔔</a>
+                <a href="#" class="social-icon">🔄</a>
+            </div>
+            <p>© 2023 Maze Solver | Created with ♥ for puzzle lovers</p>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="game.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60 },
+                color: { value: "#4cc9f0" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4cc9f0",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true
+                }
+            },
+            interactivity: {
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        // Load saved progress
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedProgress = localStorage.getItem('mazeProgress') || 0;
+            const progressBar = document.getElementById('story-progress');
+            const progressText = document.querySelector('.progress-text');
+            
+            setTimeout(() => {
+                progressBar.style.width = `${savedProgress}%`;
+                progressText.textContent = `${savedProgress}% Complete`;
+            }, 500);
+        });
+    </script>
+</body>
+</html>

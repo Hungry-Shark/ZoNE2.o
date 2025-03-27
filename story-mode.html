@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Solver - Story Mode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <div class="container">
+        <header class="game-header">
+            <h1 class="animate__animated animate__fadeInDown">Story Mode</h1>
+            <div class="game-info">
+                <div class="level-display">Level: <span id="current-level">1</span>/25</div>
+                <div class="score-display">Score: <span id="score">0</span></div>
+                <button class="home-button" onclick="location.href='index.html'">Home</button>
+            </div>
+        </header>
+        
+        <div class="game-area">
+            <canvas id="mazeCanvas" width="500" height="500"></canvas>
+            
+            <div class="game-controls">
+                <div class="stars">
+                    <span id="star1" class="star">★</span>
+                    <span id="star2" class="star">★</span>
+                    <span id="star3" class="star">★</span>
+                </div>
+                <div id="message">Complete the maze as fast as possible!</div>
+                <div id="timer">Time: <span id="timer-display">00:00</span></div>
+            </div>
+        </div>
+        
+        <div class="level-selector">
+            <h3>Level Selection</h3>
+            <div id="level-grid"></div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="game.js"></script>
+    <script src="story-mode.js"></script>
+</body>
+</html>

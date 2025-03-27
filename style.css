@@ -1,0 +1,180 @@
+/* Shared styles across all pages */
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #1a1a2e;
+    color: #e6e6e6;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(45, 55, 72, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border: 2px solid #4a5568;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.game-header h1 {
+    color: #a78bfa; /* Fixed typo: changed 'colon' to 'color' */
+    text-shadow: 3px 3px 0 #bb46c1;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #a78bfa 0%, #d946ef 100%);
+    
+    /* Standard properties */
+    color: transparent;
+    background-clip: text;
+    
+    /* Vendor prefixes for older browsers */
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Only needed for Safari */
+    
+    animation: titleflow 2s infinite alternate; /* Fixed to match keyframes name */
+}
+
+@keyframes titleflow {
+    from { text-shadow: 0 0 5px #a78bfa; }
+    to { text-shadow: 0 0 20px #d946ef; }
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+button {
+    font-family: 'Press Start 2P', cursive;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.home-button {
+    background: linear-gradient(135deg, #f72585 0%, #b5179e 100%);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.home-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
+}
+
+/* Game area styles */
+.game-area {
+    margin: 0 auto;
+    max-width: 600px;
+    position: relative;
+}
+
+#mazeCanvas {
+    background-color: #2b2d42;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+    border: 3px solid #4a5568;
+    transition: all 0.3s;
+}
+
+#mazeCanvas:hover {
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+.game-controls {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#message {
+    background-color: rgba(42, 67, 101, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    text-align: center;
+    border: 1px solid #4a5568;
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 0 5px rgba(76, 201, 240, 0.3); }
+    to { box-shadow: 0 0 15px rgba(76, 201, 240, 0.6); }
+}
+
+#timer {
+    font-size: 1.2rem;
+    color: #f56565;
+    margin: 10px 0;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(245, 101, 101, 0.5);
+}
+
+/* Stars */
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.star {
+    font-size: 2rem;
+    color: #4a5568;
+    transition: all 0.3s;
+}
+
+.star.active {
+    color: gold;
+    text-shadow: 0 0 10px gold;
+    animation: starPulse 1s infinite alternate;
+}
+
+@keyframes starPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+/* Score */
+#score {
+    font-size: 1.2rem;
+    color: #a78bfa;
+    text-align: center;
+    margin: 10px 0;
+    text-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .game-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    #mazeCanvas {
+        width: 100%;
+        height: auto;
+    }
+}

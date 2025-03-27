@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maze Solver - Mastery Mode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+    <div class="particles-container" id="particles-js"></div>
+    
+    <div class="container">
+        <header class="game-header">
+            <h1 class="animate__animated animate__fadeInDown">Mastery Mode</h1>
+            <div class="game-info">
+                <div class="difficulty-buttons">
+                    <button class="difficulty-button selected" data-difficulty="easy">Easy</button>
+                    <button class="difficulty-button" data-difficulty="medium">Medium</button>
+                    <button class="difficulty-button" data-difficulty="hard">Hard</button>
+                </div>
+                <button class="home-button" onclick="location.href='index.html'">Home</button>
+            </div>
+        </header>
+        
+        <div class="game-area">
+            <canvas id="mazeCanvas" width="500" height="500"></canvas>
+            
+            <div class="game-controls">
+                <button id="generateMaze" class="generate-button animate__animated animate__pulse animate__infinite">
+                    Generate New Maze
+                </button>
+                <div id="message">Generate a maze to get started!</div>
+                <div id="timer">Time: <span id="timer-display">00:00</span></div>
+                <div class="stars">
+                    <span id="star1" class="star">★</span>
+                    <span id="star2" class="star">★</span>
+                    <span id="star3" class="star">★</span>
+                </div>
+                <div id="score">Score: <span id="score-display">0</span></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="game.js"></script>
+    <script src="mastery-mode.js"></script>
+</body>
+</html>
