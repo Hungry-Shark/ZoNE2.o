@@ -5,15 +5,11 @@ class MazeGame {
         this.gridSize = 15;
         this.cellSize = this.canvas.width / this.gridSize;
         this.maze = [];
-        this.coins = [];
-        this.powerUps = [];
-        this.movingWalls = [];
         this.player = {
             row: 0,
             col: 0,
             direction: 0, // 0: right, 1: down, 2: left, 3: up
-            glow: 0,
-            speed: 1,
+            glow: 0
         };
         this.gameWon = false;
         this.timeLeft = 0;
@@ -27,23 +23,13 @@ class MazeGame {
     
     init() {
         window.addEventListener('keydown', (e) => this.handleKeyPress(e));
-        setInterval(() => this.updateMovingWalls(), 100);
-    }
-
-    playSound(sound) {
-        const audio = new Audio(`assets/${sound}.wav`);
-        audio.play();
     }
     
-    generateMaze(seed) {
+    generateMaze() {
         this.maze = [];
-        this.coins = [];
-        this.powerUps = [];
-        this.movingWalls = [];
         this.gameWon = false;
         this.score = 0;
-        this.player.speed = 1;
-
+        
         // Initialize grid
         for (let row = 0; row < this.gridSize; row++) {
             this.maze[row] = [];
@@ -51,22 +37,6 @@ class MazeGame {
                 this.maze[row][col] = new Cell(row, col);
             }
         }
-
-        // Seeded random number generator
-        const seededRandom = (s) => {
-            let mask = 0xffffffff;
-            let m_w = (123456789 + s) & mask;
-            let m_z = (987654321 - s) & mask;
-            return () => {
-                m_z = (36969 * (m_z & 65535) + (m_z >> 16)) & mask;
-                m_w = (18000 * (m_w & 65535) + (m_w >> 16)) & mask;
-                let result = ((m_z << 16) + (m_w & 65535)) & mask;
-                result /= 4294967296;
-                return result + 0.5;
-            }
-        };
-
-        const random = seed ? seededRandom(seed) : Math.random;
 
         // Generate maze using depth-first search
         const stack = [];
@@ -80,7 +50,7 @@ class MazeGame {
             
             if (unvisitedNeighbors.length > 0) {
                 stack.push(currentCell);
-                const randomNeighbor = unvisitedNeighbors[Math.floor(random() * unvisitedNeighbors.length)];
+                const randomNeighbor = unvisitedNeighbors[Math.floor(Math.random() * unvisitedNeighbors.length)];
                 this.removeWalls(currentCell, randomNeighbor);
                 randomNeighbor.visited = true;
                 stack.push(randomNeighbor);
@@ -93,55 +63,9 @@ class MazeGame {
         this.player.row = 0;
         this.player.col = 0;
         this.player.direction = 0;
-
-        // Place coins
-        for (let row = 0; row < this.gridSize; row++) {
-            for (let col = 0; col < this.gridSize; col++) {
-                if (random() < 0.1 && !(row === 0 && col === 0) && !(row === this.gridSize - 1 && col === this.gridSize - 1)) {
-                    this.coins.push({ row, col });
-                }
-            }
-        }
-
-        // Place power-ups
-        if (this.gridSize > 10) {
-            const powerUpRow = Math.floor(random() * (this.gridSize - 2)) + 1;
-            const powerUpCol = Math.floor(random() * (this.gridSize - 2)) + 1;
-            this.powerUps.push({ row: powerUpRow, col: powerUpCol, type: 'speed' });
-        }
-
-        // Place moving walls
-        for (let i = 0; i < this.gridSize / 5; i++) {
-            const row = Math.floor(random() * (this.gridSize - 2)) + 1;
-            const col = Math.floor(random() * (this.gridSize - 4)) + 2;
-            this.movingWalls.push({ row, col, direction: 1, length: 2, isVertical: false });
-        }
-
-        for (let i = 0; i < this.gridSize / 5; i++) {
-            const row = Math.floor(random() * (this.gridSize - 4)) + 2;
-            const col = Math.floor(random() * (this.gridSize - 2)) + 1;
-            this.movingWalls.push({ row, col, direction: 1, length: 2, isVertical: true });
-        }
         
         this.drawMaze();
         this.startTimer(this.getTimeLimit());
-    }
-
-    updateMovingWalls() {
-        this.movingWalls.forEach(wall => {
-            if (wall.isVertical) {
-                wall.row += wall.direction;
-                if (wall.row <= 1 || wall.row >= this.gridSize - wall.length) {
-                    wall.direction *= -1;
-                }
-            } else {
-                wall.col += wall.direction;
-                if (wall.col <= 1 || wall.col >= this.gridSize - wall.length) {
-                    wall.direction *= -1;
-                }
-            }
-        });
-        this.drawMaze();
     }
 
     getUnvisitedNeighbors(cell) {
@@ -187,8 +111,8 @@ class MazeGame {
                 const y = row * this.cellSize;
                 
                 // Draw walls
-                this.ctx.strokeStyle = '#45A29E';
-                this.ctx.lineWidth = 2;
+                this.ctx.strokeStyle = '#d1d5db';
+                this.ctx.lineWidth = 3;
                 
                 if (cell.walls.top) {
                     this.ctx.beginPath();
@@ -220,51 +144,16 @@ class MazeGame {
                 
                 // Draw start and end markers
                 if (cell.isStart) {
-                    this.ctx.fillStyle = 'rgba(102, 252, 241, 0.3)';
-                    this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+                    this.ctx.fillStyle = 'rgba(187, 247, 208, 0.7)';
+                    this.ctx.fillRect(x + 3, y + 3, this.cellSize - 6, this.cellSize - 6);
                 } else if (cell.isEnd) {
-                    this.ctx.fillStyle = 'rgba(247, 37, 133, 0.3)';
-                    this.ctx.fillRect(x + 2, y + 2, this.cellSize - 4, this.cellSize - 4);
+                    this.ctx.fillStyle = 'rgba(253, 230, 138, 0.7)';
+                    this.ctx.fillRect(x + 3, y + 3, this.cellSize - 6, this.cellSize - 6);
                 }
             }
         }
-
-        // Draw moving walls
-        this.ctx.fillStyle = '#e53e3e';
-        this.movingWalls.forEach(wall => {
-            const x = wall.col * this.cellSize;
-            const y = wall.row * this.cellSize;
-            if (wall.isVertical) {
-                this.ctx.fillRect(x, y, this.cellSize, this.cellSize * wall.length);
-            } else {
-                this.ctx.fillRect(x, y, this.cellSize * wall.length, this.cellSize);
-            }
-        });
-
-        // Draw coins
-        this.ctx.fillStyle = 'gold';
-        this.coins.forEach(coin => {
-            const x = coin.col * this.cellSize + this.cellSize / 2;
-            const y = coin.row * this.cellSize + this.cellSize / 2;
-            this.ctx.beginPath();
-            this.ctx.arc(x, y, this.cellSize / 4, 0, Math.PI * 2);
-            this.ctx.fill();
-        });
-
-        // Draw power-ups
-        this.powerUps.forEach(powerUp => {
-            const x = powerUp.col * this.cellSize + this.cellSize / 2;
-            const y = powerUp.row * this.cellSize + this.cellSize / 2;
-            this.ctx.fillStyle = '#66FCF1';
-            this.ctx.beginPath();
-            this.ctx.moveTo(x, y - this.cellSize / 4);
-            this.ctx.lineTo(x + this.cellSize / 4, y + this.cellSize / 4);
-            this.ctx.lineTo(x - this.cellSize / 4, y + this.cellSize / 4);
-            this.ctx.closePath();
-            this.ctx.fill();
-        });
         
-        // Draw player
+        // Draw player (glowing arrow)
         this.drawPlayer();
     }
 
@@ -280,7 +169,8 @@ class MazeGame {
         this.player.glow = (this.player.glow + 0.05) % (Math.PI * 2);
         const glowIntensity = 0.7 + Math.sin(this.player.glow) * 0.3;
         
-        this.ctx.fillStyle = `rgba(102, 252, 241, ${glowIntensity})`;
+        // Arrow body
+        this.ctx.fillStyle = `rgba(245, 101, 101, ${glowIntensity})`;
         this.ctx.beginPath();
         this.ctx.moveTo(-this.cellSize/3, -this.cellSize/4);
         this.ctx.lineTo(this.cellSize/3, 0);
@@ -288,9 +178,19 @@ class MazeGame {
         this.ctx.closePath();
         this.ctx.fill();
         
-        this.ctx.shadowColor = `rgba(102, 252, 241, ${glowIntensity * 0.7})`;
+        // Arrow head
+        this.ctx.fillStyle = `rgba(245, 101, 101, ${glowIntensity})`;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.cellSize/3, -this.cellSize/3);
+        this.ctx.lineTo(this.cellSize/2, 0);
+        this.ctx.lineTo(this.cellSize/3, this.cellSize/3);
+        this.ctx.closePath();
+        this.ctx.fill();
+        
+        // Glow effect
+        this.ctx.shadowColor = `rgba(245, 101, 101, ${glowIntensity * 0.7})`;
         this.ctx.shadowBlur = 15;
-        this.ctx.fillStyle = `rgba(102, 252, 241, ${glowIntensity * 0.5})`;
+        this.ctx.fillStyle = `rgba(245, 101, 101, ${glowIntensity * 0.5})`;
         this.ctx.beginPath();
         this.ctx.arc(0, 0, this.cellSize/3, 0, Math.PI * 2);
         this.ctx.fill();
@@ -307,7 +207,6 @@ class MazeGame {
         switch (event.key.toLowerCase()) {
             case 'w':
             case 'arrowup':
-                event.preventDefault();
                 if (this.player.row > 0 && !this.maze[this.player.row][this.player.col].walls.top) {
                     newRow -= 1;
                     this.player.direction = 3;
@@ -315,7 +214,6 @@ class MazeGame {
                 break;
             case 's':
             case 'arrowdown':
-                event.preventDefault();
                 if (this.player.row < this.gridSize - 1 && !this.maze[this.player.row][this.player.col].walls.bottom) {
                     newRow += 1;
                     this.player.direction = 1;
@@ -323,7 +221,6 @@ class MazeGame {
                 break;
             case 'a':
             case 'arrowleft':
-                event.preventDefault();
                 if (this.player.col > 0 && !this.maze[this.player.row][this.player.col].walls.left) {
                     newCol -= 1;
                     this.player.direction = 2;
@@ -331,7 +228,6 @@ class MazeGame {
                 break;
             case 'd':
             case 'arrowright':
-                event.preventDefault();
                 if (this.player.col < this.gridSize - 1 && !this.maze[this.player.row][this.player.col].walls.right) {
                     newCol += 1;
                     this.player.direction = 0;
@@ -342,49 +238,8 @@ class MazeGame {
         }
         
         if (newRow !== this.player.row || newCol !== this.player.col) {
-            this.playSound('move');
-            // Check for collisions with moving walls
-            let collision = false;
-            this.movingWalls.forEach(wall => {
-                if (wall.isVertical) {
-                    if (newCol === wall.col && newRow >= wall.row && newRow < wall.row + wall.length) {
-                        collision = true;
-                    }
-                } else {
-                    if (newRow === wall.row && newCol >= wall.col && newCol < wall.col + wall.length) {
-                        collision = true;
-                    }
-                }
-            });
-
-            if (collision) {
-                return;
-            }
-
             this.player.row = newRow;
             this.player.col = newCol;
-
-            // Check for coin collection
-            const coinIndex = this.coins.findIndex(coin => coin.row === newRow && coin.col === newCol);
-            if (coinIndex > -1) {
-                this.coins.splice(coinIndex, 1);
-                this.updateScore(100);
-                this.playSound('coin');
-            }
-
-            // Check for power-up collection
-            const powerUpIndex = this.powerUps.findIndex(powerUp => powerUp.row === newRow && powerUp.col === newCol);
-            if (powerUpIndex > -1) {
-                const powerUp = this.powerUps.splice(powerUpIndex, 1)[0];
-                if (powerUp.type === 'speed') {
-                    this.player.speed = 2;
-                    this.playSound('powerup');
-                    setTimeout(() => {
-                        this.player.speed = 1;
-                    }, 5000);
-                }
-            }
-
             this.drawMaze();
             
             // Check if player reached the end
@@ -395,31 +250,12 @@ class MazeGame {
                 document.getElementById('message').textContent = `You solved the maze! ${compliment}`;
                 this.updateScore();
                 this.updateStars();
-                this.saveScore();
                 
                 if (this.onLevelComplete) {
                     this.onLevelComplete();
                 }
             }
         }
-    }
-
-    saveScore() {
-        const name = prompt("Congratulations! Enter your name for the leaderboard:");
-        if (!name) return;
-
-        const leaderboards = JSON.parse(localStorage.getItem('leaderboards')) || {};
-        const level = this.currentLevel || 'mastery';
-
-        if (!leaderboards[level]) {
-            leaderboards[level] = [];
-        }
-
-        leaderboards[level].push({ name, score: this.score });
-        leaderboards[level].sort((a, b) => b.score - a.score);
-        leaderboards[level] = leaderboards[level].slice(0, 10); // Keep top 10
-
-        localStorage.setItem('leaderboards', JSON.stringify(leaderboards));
     }
 
     getCompliment() {
@@ -466,11 +302,10 @@ class MazeGame {
             `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
-    updateScore(points = 0) {
-        this.score += points;
+    updateScore() {
         const timeBonus = Math.floor((this.timeLeft / this.getTimeLimit()) * 500);
         const levelBonus = this.currentLevel ? this.currentLevel * 20 : 0;
-        this.score += timeBonus + levelBonus;
+        this.score = 500 + timeBonus + levelBonus;
         
         document.getElementById('score').textContent = this.score;
         if (document.getElementById('max-score')) {

@@ -3,40 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zone 2.0 - A Maze Game</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Maze Solver - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <audio id="background-music" src="assets/background.mp3" loop></audio>
     <div class="particles-container" id="particles-js"></div>
     
     <div class="container">
         <header class="game-header">
             <div class="logo-container">
-                <i class="fas fa-atom maze-icon"></i>
-                <h1>Zone 2.0</h1>
+                <div class="maze-icon">🧩</div>
+                <h1 class="animate__animated animate__fadeInDown">Maze Solver</h1>
             </div>
-            <p class="subtitle">A new dimension of maze solving.</p>
+            <p class="subtitle animate__animated animate__fadeIn animate__delay-1s">Navigate the labyrinth, conquer the challenge!</p>
         </header>
         
-        <div class="game-modes">
-            <div class="mode-card tutorial-card" onclick="location.href='tutorial.html'">
-                <div class="card-glow"></div>
-                <div class="card-content">
-                    <h2><i class="fas fa-graduation-cap"></i> Tutorial</h2>
-                    <p>Learn the basics of Zone 2.0 and start your journey.</p>
-                    <button class="play-button">Start Learning</button>
-                </div>
-            </div>
-
+        <div class="game-modes animate__animated animate__fadeIn animate__delay-1s">
             <div class="mode-card story-card" onclick="location.href='story-mode.html'">
                 <div class="card-glow"></div>
                 <div class="card-content">
-                    <h2><i class="fas fa-book-open"></i> Story Mode</h2>
-                    <p>Embark on an epic journey through 25 challenging levels.</p>
+                    <h2>Story Mode</h2>
+                    <div class="card-icon">📖</div>
+                    <p>Embark on an epic journey through 25 hand-crafted mazes with increasing complexity.</p>
                     <div class="progress-container">
                         <div class="progress-bar" id="story-progress"></div>
                         <span class="progress-text">0% Complete</span>
@@ -48,8 +39,9 @@
             <div class="mode-card mastery-card" onclick="location.href='mastery-mode.html'">
                 <div class="card-glow"></div>
                 <div class="card-content">
-                    <h2><i class="fas fa-infinity"></i> Mastery Mode</h2>
-                    <p>Test your skills with infinite randomly generated mazes.</p>
+                    <h2>Mastery Mode</h2>
+                    <div class="card-icon">🎯</div>
+                    <p>Test your skills with infinite randomly generated mazes at your chosen difficulty.</p>
                     <div class="difficulty-preview">
                         <span class="difficulty-pill easy">Easy</span>
                         <span class="difficulty-pill medium">Medium</span>
@@ -58,34 +50,15 @@
                     <button class="play-button pulse">Prove Your Skill</button>
                 </div>
             </div>
-
-            <div class="mode-card leaderboard-card" onclick="location.href='leaderboard.html'">
-                <div class="card-glow"></div>
-                <div class="card-content">
-                    <h2><i class="fas fa-trophy"></i> Leaderboards</h2>
-                    <p>See how you rank against the best maze solvers in the world.</p>
-                    <button class="play-button">View Rankings</button>
-                </div>
-            </div>
-
-            <div class="mode-card achievements-card" onclick="location.href='achievements.html'">
-                <div class="card-glow"></div>
-                <div class="card-content">
-                    <h2><i class="fas fa-star"></i> Achievements</h2>
-                    <p>Unlock achievements and earn rewards for your accomplishments.</p>
-                    <button class="play-button">View Achievements</button>
-                </div>
-            </div>
         </div>
         
         <footer class="game-footer">
             <div class="social-links">
-                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-icon">📢</a>
+                <a href="#" class="social-icon">🔔</a>
+                <a href="#" class="social-icon">🔄</a>
             </div>
-            <button id="mute-button" class="tool-button"><i class="fas fa-volume-up"></i></button>
-            <p>© 2025 Zone 2.0 | A project by Gemini</p>
+            <p>© 2023 Maze Solver | Created with ♥ for puzzle lovers</p>
         </footer>
     </div>
     
@@ -94,109 +67,32 @@
     <script>
         // Initialize particles.js
         particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
+            particles: {
+                number: { value: 60 },
+                color: { value: "#4cc9f0" },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#4cc9f0",
+                    opacity: 0.2,
+                    width: 1
                 },
-                "color": {
-                    "value": "#66FCF1"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    },
-                    "polygon": {
-                        "nb_sides": 5
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1,
-                        "opacity_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                    "anim": {
-                        "enable": false,
-                        "speed": 40,
-                        "size_min": 0.1,
-                        "sync": false
-                    }
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#45A29E",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 6,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                    "attract": {
-                        "enable": false,
-                        "rotateX": 600,
-                        "rotateY": 1200
-                    }
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true
                 }
             },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "grab": {
-                        "distance": 400,
-                        "line_linked": {
-                            "opacity": 1
-                        }
-                    },
-                    "bubble": {
-                        "distance": 400,
-                        "size": 40,
-                        "duration": 2,
-                        "opacity": 8,
-                        "speed": 3
-                    },
-                    "repulse": {
-                        "distance": 200,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    },
-                    "remove": {
-                        "particles_nb": 2
-                    }
+            interactivity: {
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" }
                 }
-            },
-            "retina_detect": true
+            }
         });
 
         // Load saved progress
@@ -209,23 +105,6 @@
                 progressBar.style.width = `${savedProgress}%`;
                 progressText.textContent = `${savedProgress}% Complete`;
             }, 500);
-
-            const backgroundMusic = document.getElementById('background-music');
-            const muteButton = document.getElementById('mute-button');
-
-            const playMusic = () => {
-                backgroundMusic.play().catch(error => {
-                    console.log("Autoplay was prevented. Please interact with the page to play music.");
-                });
-                document.body.removeEventListener('click', playMusic);
-            };
-
-            document.body.addEventListener('click', playMusic);
-
-            muteButton.addEventListener('click', () => {
-                backgroundMusic.muted = !backgroundMusic.muted;
-                muteButton.innerHTML = backgroundMusic.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-            });
         });
     </script>
 </body>

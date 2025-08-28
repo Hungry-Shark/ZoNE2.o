@@ -1,3 +1,14 @@
+/* Particle.js background */
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
 /* Animated logo */
 .logo-container {
     display: flex;
@@ -9,7 +20,6 @@
 
 .maze-icon {
     font-size: 3rem;
-    color: var(--accent-color-1);
     animation: bounce 2s infinite alternate;
 }
 
@@ -21,21 +31,36 @@
 /* Enhanced mode cards */
 .mode-card {
     position: relative;
-    background: var(--secondary-color);
+    background: linear-gradient(145deg, #2b2d42 0%, #1f2133 100%);
     border-radius: 20px;
     width: 45%;
     min-width: 350px;
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     overflow: hidden;
-    border: 2px solid var(--accent-color-2);
+    border: 2px solid rgba(113, 137, 150, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .mode-card:hover {
     transform: translateY(-10px) scale(1.02);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-    border-color: var(--accent-color-1);
+}
+
+.mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(76, 201, 240, 0.1) 0%,
+        rgba(67, 97, 238, 0.1) 50%,
+        rgba(247, 37, 133, 0.1) 100%
+    );
+    z-index: 1;
 }
 
 .card-glow {
@@ -44,7 +69,7 @@
     height: 100%;
     background: radial-gradient(
         circle at center,
-        rgba(102, 252, 241, 0.15) 0%,
+        rgba(76, 201, 240, 0.15) 0%,
         transparent 70%
     );
     opacity: 0;
@@ -53,6 +78,22 @@
 
 .mode-card:hover .card-glow {
     opacity: 1;
+}
+
+.story-card .card-glow {
+    background: radial-gradient(
+        circle at center,
+        rgba(247, 37, 133, 0.15) 0%,
+        transparent 70%
+    );
+}
+
+.mastery-card .card-glow {
+    background: radial-gradient(
+        circle at center,
+        rgba(76, 201, 240, 0.15) 0%,
+        transparent 70%
+    );
 }
 
 .card-content {
@@ -64,13 +105,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.mode-card h2 {
-    font-family: var(--heading-font);
-    font-size: 2rem;
-    letter-spacing: 0.1rem;
-    margin-bottom: 15px;
 }
 
 .card-icon {
@@ -85,7 +119,7 @@
 }
 
 .mastery-card .card-icon {
-    color: var(--accent-color-1);
+    color: #4cc9f0;
 }
 
 .mode-card:hover .card-icon {
@@ -159,8 +193,8 @@
     z-index: 1;
     border: none;
     cursor: pointer;
-    font-family: var(--font-family);
-    color: var(--primary-color);
+    font-family: 'Press Start 2P', cursive;
+    color: white;
 }
 
 .story-card .play-button {
@@ -169,8 +203,8 @@
 }
 
 .mastery-card .play-button {
-    background: linear-gradient(135deg, var(--accent-color-1) 0%, var(--accent-color-2) 100%);
-    box-shadow: 0 4px 15px rgba(102, 252, 241, 0.4);
+    background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+    box-shadow: 0 4px 15px rgba(76, 201, 240, 0.4);
 }
 
 .play-button::before {
@@ -204,7 +238,7 @@
 .game-footer {
     margin-top: 50px;
     text-align: center;
-    color: var(--accent-color-1);
+    color: #4cc9f0;
     font-size: 0.8rem;
     display: flex;
     flex-direction: column;
@@ -218,13 +252,13 @@
 }
 
 .social-icon {
-    color: var(--text-color);
+    color: #718096;
     font-size: 1.2rem;
     transition: all 0.3s;
 }
 
 .social-icon:hover {
-    color: var(--accent-color-1);
+    color: #4cc9f0;
     transform: translateY(-3px);
 }
 

@@ -11,11 +11,10 @@
     border-radius: 50px;
     font-size: 0.7rem;
     transition: all 0.3s;
-    border: 2px solid transparent;
+    border: none;
     cursor: pointer;
-    font-family: var(--font-family);
-    color: var(--text-color);
-    background-color: var(--secondary-color);
+    font-family: 'Press Start 2P', cursive;
+    color: white;
 }
 
 .difficulty-button.selected {
@@ -24,35 +23,20 @@
 }
 
 .difficulty-button[data-difficulty="easy"] {
-    border-color: #48bb78;
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
 }
 
 .difficulty-button[data-difficulty="medium"] {
-    border-color: #d69e2e;
+    background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
 }
 
 .difficulty-button[data-difficulty="hard"] {
-    border-color: #e53e3e;
-}
-
-.difficulty-button.selected[data-difficulty="easy"] {
-    background-color: #48bb78;
-    color: var(--primary-color);
-}
-
-.difficulty-button.selected[data-difficulty="medium"] {
-    background-color: #d69e2e;
-    color: var(--primary-color);
-}
-
-.difficulty-button.selected[data-difficulty="hard"] {
-    background-color: #e53e3e;
-    color: var(--primary-color);
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
 }
 
 /* Generate button */
 .generate-button {
-    background: linear-gradient(135deg, var(--accent-color-1) 0%, var(--accent-color-2) 100%);
+    background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
     padding: 15px 30px;
     border-radius: 50px;
     font-size: 0.9rem;
@@ -60,14 +44,14 @@
     transition: all 0.3s;
     border: none;
     cursor: pointer;
-    font-family: var(--font-family);
-    color: var(--primary-color);
-    box-shadow: 0 5px 15px rgba(102, 252, 241, 0.4);
+    font-family: 'Press Start 2P', cursive;
+    color: white;
+    box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
 }
 
 .generate-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(102, 252, 241, 0.6);
+    box-shadow: 0 8px 20px rgba(76, 201, 240, 0.6);
 }
 
 /* Level selector */
@@ -78,7 +62,7 @@
 
 .level-selector h3 {
     margin-bottom: 15px;
-    color: var(--accent-color-1);
+    color: #a78bfa;
 }
 
 #level-grid {
@@ -89,40 +73,37 @@
 }
 
 .level-button {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
+    background-color: #4cc9f0;
+    color: #1a1a2e;
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-family: var(--font-family);
+    font-family: 'Press Start 2P', cursive;
     font-size: 0.7rem;
     transition: all 0.3s;
-    border: 1px solid var(--accent-color-2);
+    border: none;
 }
 
 .level-button.completed {
     background-color: #f72585;
     color: white;
-    border-color: #f72585;
 }
 
 .level-button.current {
-    background-color: var(--accent-color-1);
-    color: var(--primary-color);
+    background-color: gold;
+    color: #1a1a2e;
     transform: scale(1.1);
-    border-color: var(--accent-color-1);
 }
 
 .level-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    border-color: var(--accent-color-1);
 }
 
 .level-display, .score-display {
     font-size: 0.9rem;
-    color: var(--accent-color-1);
-    text-shadow: 0 0 5px var(--accent-color-1);
+    color: #a78bfa;
+    text-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
 }
 
 #max-score {

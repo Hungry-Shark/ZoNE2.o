@@ -28,6 +28,7 @@ class StoryMode extends MazeGame {
     loadLevel(levelNumber) {
         this.currentLevel = levelNumber;
         document.getElementById('current-level').textContent = levelNumber;
+        document.getElementById('max-score').textContent = this.maxScore;
         
         // Update level buttons
         const levelButtons = document.querySelectorAll('.level-button');
@@ -50,7 +51,7 @@ class StoryMode extends MazeGame {
         this.score = 0;
         document.getElementById('score').textContent = this.score;
         this.resetStars();
-        this.generateMaze(this.currentLevel);
+        this.generateMaze();
         
         // Set time limit based on level difficulty
         const timeLimit = 180 - (levelNumber * 5);
@@ -63,11 +64,10 @@ class StoryMode extends MazeGame {
         });
     }
     
-    updateScore(points = 0) {
-        this.score += points;
+    updateScore() {
         const timeBonus = Math.floor((this.timeLeft / this.getTimeLimit()) * 500);
         const levelBonus = this.currentLevel * 20;
-        this.score += timeBonus + levelBonus;
+        this.score = 500 + timeBonus + levelBonus;
         
         document.getElementById('score').textContent = this.score;
         this.updateStars();
@@ -81,26 +81,11 @@ class StoryMode extends MazeGame {
             star.classList.toggle('active', percentage >= this.starThresholds[index]);
         });
     }
-
-    unlockAchievement(achievementId) {
-        const unlockedAchievements = JSON.parse(localStorage.getItem('unlockedAchievements')) || [];
-        if (!unlockedAchievements.includes(achievementId)) {
-            unlockedAchievements.push(achievementId);
-            localStorage.setItem('unlockedAchievements', JSON.stringify(unlockedAchievements));
-        }
-    }
     
     onLevelComplete() {
-        this.playSound('win');
         // Save progress
         const progress = Math.floor((this.currentLevel / this.totalLevels) * 100);
         localStorage.setItem('mazeProgress', progress);
-
-        // Unlock achievements
-        this.unlockAchievement(`level_${this.currentLevel}`);
-        if (this.coins.length === 0) {
-            this.unlockAchievement('all_coins');
-        }
         
         // Unlock next level if not last level
         if (this.currentLevel < this.totalLevels) {
@@ -110,7 +95,6 @@ class StoryMode extends MazeGame {
         } else {
             document.getElementById('message').textContent = 
                 "Congratulations! You completed all levels!";
-            this.unlockAchievement('level_25');
         }
     }
 }
@@ -119,109 +103,32 @@ class StoryMode extends MazeGame {
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize particles.js
     particlesJS('particles-js', {
-        "particles": {
-            "number": {
-                "value": 80,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
+        particles: {
+            number: { value: 60 },
+            color: { value: "#4cc9f0" },
+            shape: { type: "circle" },
+            opacity: { value: 0.3, random: true },
+            size: { value: 3, random: true },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#4cc9f0",
+                opacity: 0.2,
+                width: 1
             },
-            "color": {
-                "value": "#66FCF1"
-            },
-            "shape": {
-                "type": "circle",
-                "stroke": {
-                    "width": 0,
-                    "color": "#000000"
-                },
-                "polygon": {
-                    "nb_sides": 5
-                }
-            },
-            "opacity": {
-                "value": 0.5,
-                "random": false,
-                "anim": {
-                    "enable": false,
-                    "speed": 1,
-                    "opacity_min": 0.1,
-                    "sync": false
-                }
-            },
-            "size": {
-                "value": 3,
-                "random": true,
-                "anim": {
-                    "enable": false,
-                    "speed": 40,
-                    "size_min": 0.1,
-                    "sync": false
-                }
-            },
-            "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#45A29E",
-                "opacity": 0.4,
-                "width": 1
-            },
-            "move": {
-                "enable": true,
-                "speed": 6,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false,
-                "attract": {
-                    "enable": false,
-                    "rotateX": 600,
-                    "rotateY": 1200
-                }
+            move: {
+                enable: true,
+                speed: 1,
+                direction: "none",
+                random: true
             }
         },
-        "interactivity": {
-            "detect_on": "canvas",
-            "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "repulse"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-            },
-            "modes": {
-                "grab": {
-                    "distance": 400,
-                    "line_linked": {
-                        "opacity": 1
-                    }
-                },
-                "bubble": {
-                    "distance": 400,
-                    "size": 40,
-                    "duration": 2,
-                    "opacity": 8,
-                    "speed": 3
-                },
-                "repulse": {
-                    "distance": 200,
-                    "duration": 0.4
-                },
-                "push": {
-                    "particles_nb": 4
-                },
-                "remove": {
-                    "particles_nb": 2
-                }
+        interactivity: {
+            events: {
+                onhover: { enable: true, mode: "grab" },
+                onclick: { enable: true, mode: "push" }
             }
-        },
-        "retina_detect": true
+        }
     });
 
     // Start the game
