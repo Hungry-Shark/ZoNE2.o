@@ -1,53 +1,72 @@
+@font-face {
+    font-family: 'Beyno';
+    src: url('assets/fonts/beyno.otf') format('opentype');
+}
+
 /* Shared styles across all pages */
+:root {
+    --primary-color: #0B0C10;
+    --secondary-color: #1F2833;
+    --accent-color-1: #66FCF1;
+    --accent-color-2: #45A29E;
+    --text-color: #C5C6C7;
+    --font-family: 'Roboto Mono', monospace;
+    --heading-font: 'Beyno', sans-serif;
+}
+
 body {
-    font-family: 'Press Start 2P', cursive;
-    background-color: #1a1a2e;
-    color: #e6e6e6;
+    font-family: var(--font-family);
+    background-color: var(--primary-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
     line-height: 1.6;
 }
 
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
 .container {
-    max-width: 1200px;
+    max-width: 80%;
     margin: 0 auto;
-    padding: 20px;
-    background-color: rgba(45, 55, 72, 0.9);
+    padding: 40px;
+    background-color: var(--secondary-color);
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    margin-top: 30px;
-    margin-bottom: 30px;
-    border: 2px solid #4a5568;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border: 1px solid var(--accent-color-2);
 }
 
 .game-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     position: relative;
 }
 
 .game-header h1 {
-    color: #a78bfa; /* Fixed typo: changed 'colon' to 'color' */
-    text-shadow: 3px 3px 0 #bb46c1;
+    font-family: var(--heading-font);
+    color: var(--accent-color-1);
+    text-shadow: 0 0 10px var(--accent-color-1);
     margin-bottom: 10px;
-    font-size: 2.5rem;
-    background: linear-gradient(135deg, #a78bfa 0%, #d946ef 100%);
-    
-    /* Standard properties */
-    color: transparent;
-    background-clip: text;
-    
-    /* Vendor prefixes for older browsers */
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent; /* Only needed for Safari */
-    
-    animation: titleflow 2s infinite alternate; /* Fixed to match keyframes name */
+    font-size: 4rem;
+    letter-spacing: 0.2rem;
+    animation: glow 1.5s infinite alternate;
 }
 
-@keyframes titleflow {
-    from { text-shadow: 0 0 5px #a78bfa; }
-    to { text-shadow: 0 0 20px #d946ef; }
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px var(--accent-color-1), 0 0 20px var(--accent-color-1), 0 0 30px var(--accent-color-1);
+    }
+    to {
+        text-shadow: 0 0 20px var(--accent-color-1), 0 0 30px var(--accent-color-2), 0 0 40px var(--accent-color-2);
+    }
 }
 
 .game-info {
@@ -60,23 +79,32 @@ body {
 }
 
 button {
-    font-family: 'Press Start 2P', cursive;
+    font-family: var(--font-family);
     border: none;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: var(--accent-color-2);
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--accent-color-1);
+    color: var(--primary-color);
+    box-shadow: 0 0 15px var(--accent-color-1);
 }
 
 .home-button {
-    background: linear-gradient(135deg, #f72585 0%, #b5179e 100%);
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    color: white;
+    background: transparent;
+    border: 2px solid var(--accent-color-2);
+    color: var(--accent-color-1);
 }
 
 .home-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
+    background: var(--accent-color-2);
+    color: var(--primary-color);
 }
 
 /* Game area styles */
@@ -87,17 +115,12 @@ button {
 }
 
 #mazeCanvas {
-    background-color: #2b2d42;
+    background-color: var(--primary-color);
     border-radius: 15px;
     display: block;
     margin: 0 auto;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-    border: 3px solid #4a5568;
-    transition: all 0.3s;
-}
-
-#mazeCanvas:hover {
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--accent-color-2);
 }
 
 .game-controls {
@@ -106,26 +129,21 @@ button {
 }
 
 #message {
-    background-color: rgba(42, 67, 101, 0.7);
+    background-color: rgba(31, 40, 51, 0.8);
     padding: 15px;
     border-radius: 10px;
     margin: 15px 0;
     text-align: center;
-    border: 1px solid #4a5568;
-    animation: pulse 2s infinite alternate;
-}
-
-@keyframes pulse {
-    from { box-shadow: 0 0 5px rgba(76, 201, 240, 0.3); }
-    to { box-shadow: 0 0 15px rgba(76, 201, 240, 0.6); }
+    border: 1px solid var(--accent-color-2);
+    font-size: 1.1rem;
 }
 
 #timer {
-    font-size: 1.2rem;
-    color: #f56565;
+    font-size: 1.5rem;
+    color: var(--accent-color-1);
     margin: 10px 0;
     text-align: center;
-    text-shadow: 0 0 5px rgba(245, 101, 101, 0.5);
+    text-shadow: 0 0 5px var(--accent-color-1);
 }
 
 /* Stars */
@@ -137,14 +155,14 @@ button {
 }
 
 .star {
-    font-size: 2rem;
-    color: #4a5568;
+    font-size: 2.5rem;
+    color: var(--secondary-color);
     transition: all 0.3s;
 }
 
 .star.active {
-    color: gold;
-    text-shadow: 0 0 10px gold;
+    color: var(--accent-color-1);
+    text-shadow: 0 0 10px var(--accent-color-1);
     animation: starPulse 1s infinite alternate;
 }
 
@@ -155,11 +173,11 @@ button {
 
 /* Score */
 #score {
-    font-size: 1.2rem;
-    color: #a78bfa;
+    font-size: 1.5rem;
+    color: var(--accent-color-1);
     text-align: center;
     margin: 10px 0;
-    text-shadow: 0 0 5px rgba(167, 139, 250, 0.5);
+    text-shadow: 0 0 5px var(--accent-color-1);
 }
 
 /* Mobile responsiveness */
@@ -170,11 +188,27 @@ button {
     }
     
     .game-header h1 {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
     
     #mazeCanvas {
         width: 100%;
         height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header h1 {
+        font-size: 2rem;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .home-button {
+        padding: 8px 15px;
+        font-size: 0.7rem;
     }
 }

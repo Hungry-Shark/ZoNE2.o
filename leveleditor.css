@@ -1,0 +1,32 @@
+.editor-container {
+    display: flex;
+    gap: 20px;
+}
+
+.toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tool-button {
+    padding: 10px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--accent-color-2);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tool-button.active {
+    background-color: var(--accent-color-2);
+    color: var(--primary-color);
+}
+
+#editor-canvas {
+    background-color: var(--primary-color);
+    border: 2px solid var(--accent-color-2);
+    cursor: crosshair;
+}
